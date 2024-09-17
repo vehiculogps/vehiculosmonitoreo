@@ -1,0 +1,41 @@
+<style>
+    .navbar-nav .nav-item {
+        display: flex;
+        align-items: center;
+    }
+
+    .navbar-nav .form-select {
+        width: auto;
+        margin-left: 10px;
+    }
+</style>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">
+        <img src="/logo.png" alt="Icono">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto align-items-center">
+            <li class="nav-item active">
+                <a class="nav-link" href="/login">
+                    <i class="bi bi-person-circle me-3"></i> Iniciar Sesión
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Mapa</a>
+            </li>
+            <li class="nav-item">
+                <select class="form-select form-select-sm ms-2" id="carSelector" aria-label="Seleccionar Carro">
+                    <option selected>Seleccione un Vehículo</option>
+                    <option value="car1">Vehículo OWG675</option>
+                    <option value="car2">Vehículo OWG882</option>
+                    <option value="car3">Vehículo OWG883</option>
+                </select>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div id="map"></div>

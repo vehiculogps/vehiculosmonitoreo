@@ -1,0 +1,23 @@
+html, body, #container {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+#map {
+  display: block;
+  position: absolute;
+  height: 90vh;
+  width: 100%;
+}
+/* Estilo personalizado para evitar que Leaflet oculte elementos encima del mapa */
+
+/* Estilo personalizado para evitar que Leaflet oculte elementos encima del mapa */
+.leaflet-container {
+  z-index: 0 !important; /* Asegura que el mapa no esté por encima de otros elementos */
+  pointer-events: auto !important; /* Permite la interacción con elementos debajo del mapa */
+}
+main.container-fluid {
+  padding-left: 0;
+  padding-right: 0;
+}
+
