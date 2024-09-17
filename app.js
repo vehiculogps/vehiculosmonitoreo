@@ -55,6 +55,10 @@ io.on('connection', (socket) => {
     });
 });
 
+
+//////////////////////////////////////////////////////
+// Rutas
+//////////////////////////////////////////////////////
 app.get('/', (req, res) => {
     res.render('index', { pageTitle: 'Home Page' });
 });
@@ -67,6 +71,7 @@ app.get('/login', (req, res) => {
 app.use('/usuarios', require('./routes/users')); // Importa las rutas de usuario
 app.use('rutas',require("./routes/rutaVehiculo"));
 app.use('vehiculo', require("./routes/vehiculo"));
+
 
 // Configurar el puerto en el que el servidor escuchará
 const PORT = process.env.PORT || 3000;
