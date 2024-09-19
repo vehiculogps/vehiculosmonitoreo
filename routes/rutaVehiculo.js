@@ -2,13 +2,7 @@ const express = require('express');
 const router = express.Router();
 const rutaController = require('../controllers/rutaController');
 
-// Crear una nueva ruta
-router.post('/rutas', rutaController.crearRuta);
-
-// Obtener todas las rutas
-router.get('/rutas', rutaController.obtenerRutas);
-
-// Obtener rutas por ID de vehículo
-router.get('/rutas/vehiculo/:vehiculoId', rutaController.obtenerRutasPorVehiculoId);
+// Obtener rutas por ID de vehículo y por día
+router.get('/vehiculo/:vehiculoId/dia/:dia', rutaController.obtenerRutasPorDiaYVehiculo);
 
 module.exports = router;

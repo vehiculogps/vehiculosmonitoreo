@@ -1,30 +1,49 @@
 const mongoose = require('mongoose');
+const { Schema } = mongoose;
 
-const rutaSchema = new mongoose.Schema({
-  vehiculoId: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
-    ref: 'Vehiculo',
-  },
-  ubicacion: {
-    type: {
-      latitud: {
-        type: Number,
-        required: true,
-      },
-      longitud: {
-        type: Number,
-        required: true,
-      },
-    },
-    required: true,
-  },
-  fechaHora: {
+// Esquema GeoJSON para MongoDB con campos 'day' y 'vehicle_id'
+const geoJsonSchema = new Schema({
+  day: {
     type: Date,
-    default: Date.now,
+    required: true
   },
+  vehicle_id: {
+    type: String,
+    required: true
+  },
+  type: {
+    type: String,
+    enum: ['FeatureCollection'], // Solo permitimos FeatureCollection para el tipo de GeoJSON
+    required: true
+  },
+  features: [
+    {
+      type: {
+        type: String,
+        enum: ['Feature'], // Cada elemento en 'features' debe ser de tipo 'Feature'
+        required: true
+      },
+      geometry: {
+        type: {
+          type: String,
+          enum: ['Point', 'LineString', 'Polygon'], // Permitimos puntos, líneas y polígonos
+          required: true
+        },
+        coordinates: {
+          type: [Number], // Lista de números que representan las coordenadas (latitud, longitud)
+          required: true
+        }
+      },
+      properties: {
+        type: Schema.Types.Mixed, // Almacenar cualquier propiedad adicional
+        default: {}
+      }
+    }
+  ]
 });
 
-const Ruta = mongoose.model('Ruta', rutaSchema);
+// Crear el modelo
+const Ruta = mongoose.model('RutaGeoJson', geoJsonSchema);
 
 module.exports = Ruta;
+

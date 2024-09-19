@@ -1,3 +1,4 @@
+// Conexion con la base de datos.
 const mongoose = require('mongoose');
 require('dotenv').config();
 
