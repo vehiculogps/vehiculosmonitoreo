@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const rutasController = require('../controllers/rutaController');
+const rutaController = require('../controllers/rutaController');
 
-// Definir la ruta para obtener las coordenadas por vehicle_id y fecha
-router.get('/vehiculo/:vehiculoId/dia/:dia/coordenadas', rutasController.obtenerCoordenadasPorVehiculoYFecha);
+// Ruta para obtener las rutas en formato GeoJSON
+router.get('/vehiculo/:vehiculoId/dia/:dia', rutaController.obtenerRutaGeoJSON);
 
 module.exports = router;

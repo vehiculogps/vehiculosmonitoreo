@@ -1,14 +1,81 @@
-<style>
-    .navbar-nav .nav-item {
-        display: flex;
-        align-items: center;
-    }
+<script>
+    // Inicializar el mapa en Leaflet
+    var map = L.map('map').setView([7.36846, -72.64862], 13);  // Coordenadas iniciales
 
-    .navbar-nav .form-select {
-        width: auto;
-        margin-left: 10px;
-    }
-</style>
+    // Añadir un mapa base desde OpenStreetMap
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '© OpenStreetMap'
+    }).addTo(map);
+
+    // Variable para almacenar la capa de la ruta actual
+    var currentRouteLayer = null;
+
+    // Manejar la selección del vehículo
+    document.getElementById('carSelector').addEventListener('change', function() {
+        var vehicleId = this.value;
+
+        // Verificar que se haya seleccionado un vehículo
+        if (!vehicleId) {
+            alert("Por favor, seleccione un vehículo.");
+            return;
+        }
+
+        // Limpiar las capas anteriores del mapa
+        if (currentRouteLayer) {
+            map.removeLayer(currentRouteLayer);
+        }
+
+        // Hacer una petición al servidor para obtener la ruta
+        fetch('/rutas/vehiculo/' + vehicleId + '/dia/2024-09-20')  // Ajusta la fecha según necesites
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert(data.error);
+                    return;
+                }
+
+                // Crear una capa GeoJSON con los datos recibidos
+                currentRouteLayer = L.geoJSON(data, {
+                    onEachFeature: function(feature, layer) {
+                        if (feature.properties && feature.properties.name) {
+                            layer.bindPopup(feature.properties.name);
+                        }
+                    },
+                    pointToLayer: function(feature, latlng) {
+                        if (feature.geometry.type === 'Point') {
+                            return L.marker(latlng, {
+                                icon: L.icon({
+                                    iconUrl: feature.properties.icon || 'default_icon.png',  // Asegúrate de tener un icono por defecto
+                                    iconSize: [32, 32],
+                                    iconAnchor: [16, 32],
+                                    popupAnchor: [0, -32]
+                                })
+                            });
+                        }
+                    },
+                    style: function(feature) {
+                        if (feature.geometry.type === 'LineString') {
+                            return {
+                                color: feature.properties.stroke || 'blue',
+                                weight: feature.properties['stroke-width'] || 5,
+                                opacity: feature.properties['stroke-opacity'] || 0.7
+                            };
+                        }
+                    }
+                }).addTo(map);
+
+                // Ajustar el mapa a los límites de la ruta
+                map.fitBounds(currentRouteLayer.getBounds());
+
+            })
+            .catch(error => {
+                console.error("Error al cargar la ruta:", error);
+                alert("Error al cargar la ruta.");
+            });
+    });
+</script>
+
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="#">
@@ -28,12 +95,12 @@
                 <a class="nav-link" href="#">Mapa</a>
             </li>
             <li class="nav-item">
-                <select class="form-select form-select-sm ms-2" id="carSelector" aria-label="Seleccionar Carro">
-                    <option selected>Seleccione un Vehículo</option>
-                    <option value="car1">Vehículo OWG675</option>
-                    <option value="car2">Vehículo OWG882</option>
-                    <option value="car3">Vehículo OWG883</option>
-                </select>
+            <select class="form-select form-select-sm ms-2" id="carSelector" aria-label="Seleccionar Carro">
+                <option selected value="">Seleccione un Vehículo</option>
+                <option value="owg675">Vehículo OWG675</option>
+                <option value="owg882">Vehículo OWG882</option>
+                <option value="owg883">Vehículo OWG883</option>
+            </select>
             </li>
         </ul>
     </div>
