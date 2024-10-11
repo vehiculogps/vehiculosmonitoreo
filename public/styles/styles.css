@@ -6,7 +6,7 @@ html, body, #container {
 #map {
   display: block;
   position: absolute;
-  height: 90vh;
+  height: 80vh;
   width: 100%;
 }
 /* Estilo personalizado para evitar que Leaflet oculte elementos encima del mapa */
