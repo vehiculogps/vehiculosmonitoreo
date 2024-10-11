@@ -69,8 +69,8 @@ app.get('/login', (req, res) => {
 
 // Rutas de usuario
 app.use('/usuarios', require('./routes/users')); // Importa las rutas de usuario
-app.use('rutas',require("./routes/rutaVehiculo"));
-app.use('vehiculo', require("./routes/vehiculo"));
+app.use('/rutas',require("./routes/rutaVehiculo"));
+app.use('/vehiculo', require("./routes/vehiculo"));
 
 
 // Configurar el puerto en el que el servidor escuchará

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Ruta = require('./models/ruta'); // Importar el modelo de GeoJSON
-const geoJsonEjemplo = require('./RutaMartesowg675'); // Importar el archivo con el GeoJSON
+const geoJsonEjemplo = require('./RutaMartesowg675C'); // Importar el archivo con el GeoJSON
 const connectDB = require('./config/database'); // Importar la función de conexión a la base de datos
 
 // Definir el esquema de Mongoose

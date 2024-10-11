@@ -5,7 +5,7 @@ const { Schema } = mongoose;
 const geoJsonSchema = new Schema({
   day: {
     type: Date,
-    required: true
+    required:true
   },
   vehicle_id: {
     type: String,

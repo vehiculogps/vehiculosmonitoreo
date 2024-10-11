@@ -1,23 +1,23 @@
 const Ruta = require('../models/ruta');
 
-// Obtener rutas por día y ID de vehículo
-exports.obtenerRutasPorDiaYVehiculo = async (req, res) => {
+// Obtener todas las rutas por ID de vehículo
+exports.obtenerRutasPorVehiculo = async (req, res) => {
   try {
-    const { vehiculoId, dia } = req.params;
-    const startDate = new Date(dia);
-    const endDate = new Date(dia);
-    endDate.setDate(endDate.getDate() + 1); // Obtener las rutas del día completo
+    const { vehiculoId } = req.params;
+    console.log(vehiculoId)
 
-    const rutas = await Ruta.find({
-      vehicle_id: vehiculoId,
-      day: { $gte: startDate, $lt: endDate }
-    });
+    // Buscar todas las rutas que coincidan con el ID del vehículo
+    const rutas = await Ruta.find({ vehicle_id: vehiculoId });
 
+    // Verificar si se encontraron rutas
     if (!rutas || rutas.length === 0) {
-      return res.status(404).json({ error: 'Rutas no encontradas para este vehículo en el día especificado' });
+      return res.status(404).json({ error: 'No se encontraron rutas para este vehículo' });
     }
+
+    // Enviar las rutas encontradas
     res.status(200).json(rutas);
   } catch (error) {
+    // Manejar errores
     res.status(500).json({ error: error.message });
   }
 };
