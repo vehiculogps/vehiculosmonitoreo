@@ -1,23 +1,41 @@
-const Ruta = require('../models/ruta');
+const Ruta = require('../models/ruta'); // Importar el modelo Ruta
 
-// Obtener todas las rutas por ID de vehículo
-exports.obtenerRutasPorVehiculo = async (req, res) => {
+// Controlador para obtener las rutas y las coordenadas por vehicle_id y fecha
+exports.obtenerCoordenadasPorVehiculoYFecha = async (req, res) => {
+  const { vehiculoId, dia } = req.params;
+
   try {
-    const { vehiculoId } = req.params;
-    console.log(vehiculoId)
+    // Convertir la fecha recibida en un rango de inicio y fin para el día
+    const startDate = new Date(dia);
+    const endDate = new Date(dia);
+    endDate.setDate(endDate.getDate() + 1); // Aumentar un día para obtener todas las rutas del día
 
-    // Buscar todas las rutas que coincidan con el ID del vehículo
-    const rutas = await Ruta.find({ vehicle_id: vehiculoId });
-
-    // Verificar si se encontraron rutas
-    if (!rutas || rutas.length === 0) {
-      return res.status(404).json({ error: 'No se encontraron rutas para este vehículo' });
+    if (isNaN(startDate.getTime())) {
+      return res.status(400).json({ error: 'Fecha no válida' });
     }
 
-    // Enviar las rutas encontradas
-    res.status(200).json(rutas);
+    // Buscar las rutas por vehicle_id y el rango de fecha
+    const rutas = await Ruta.find({
+      vehicle_id: vehiculoId,
+      day: { $gte: startDate, $lt: endDate }
+    });
+
+    // Si no se encuentran rutas, devolver un error
+    if (rutas.length === 0) {
+      return res.status(404).json({ error: 'Rutas no encontradas para este vehículo en el día especificado' });
+    }
+    
+    // Extraer las coordenadas de las features de cada ruta
+    const coordenadas = rutas.map(ruta => {
+      return ruta.features.map(feature => ({
+        coordenadas: feature.geometry.coordinates
+      }));
+    });
+
+    // Devolver las coordenadas
+    return res.status(200).json({ vehicle_id: vehiculoId, dia, rutas: coordenadas });
+
   } catch (error) {
-    // Manejar errores
-    res.status(500).json({ error: error.message });
+    return res.status(500).json({ error: 'Error interno del servidor' });
   }
 };
