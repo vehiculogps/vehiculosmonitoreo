@@ -5,7 +5,7 @@ const { Schema } = mongoose;
 const geoJsonSchema = new Schema({
   day: {
     type: Date,
-    required:true
+    required: true
   },
   vehicle_id: {
     type: String,
@@ -30,7 +30,8 @@ const geoJsonSchema = new Schema({
           required: true
         },
         coordinates: {
-          type: [Number], // Lista de números que representan las coordenadas (latitud, longitud)
+          // Array para Point (1 par de coordenadas) o LineString (múltiples pares de coordenadas)
+          type: Schema.Types.Array, // Tipo array para admitir tanto puntos como líneas
           required: true
         }
       },
@@ -43,7 +44,6 @@ const geoJsonSchema = new Schema({
 });
 
 // Crear el modelo
-const Ruta = mongoose.model('RutaGeoJson', geoJsonSchema,'rutas');
+const Ruta = mongoose.model('Ruta', geoJsonSchema, 'rutas');
 
 module.exports = Ruta;
-
