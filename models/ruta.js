@@ -43,7 +43,7 @@ const geoJsonSchema = new Schema({
 });
 
 // Crear el modelo
-const Ruta = mongoose.model('RutaGeoJson', geoJsonSchema);
+const Ruta = mongoose.model('RutaGeoJson', geoJsonSchema,'rutas');
 
 module.exports = Ruta;
 
