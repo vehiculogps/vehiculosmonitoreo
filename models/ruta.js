@@ -4,7 +4,7 @@ const { Schema } = mongoose;
 // Esquema GeoJSON para MongoDB con campos 'day' y 'vehicle_id'
 const geoJsonSchema = new Schema({
   day: {
-    type: Date,
+    type: String,
     required: true
   },
   vehicle_id: {

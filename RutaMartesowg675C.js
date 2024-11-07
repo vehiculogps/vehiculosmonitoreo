@@ -1,5 +1,5 @@
-module.exports  = { 
-    "day": new Date(),
+module.exports = RutaMartesowg675C  = { 
+    "day": "viernes",
     "vehicle_id": 'owg675',
     "type":"FeatureCollection",
     "features":[{"type":"Feature",

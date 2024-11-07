@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node app.js",
-    "run"  : "node guardarTemp.js",
+    "run": "node guardarTemp.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -18,6 +18,7 @@
     "express": "^4.19.2",
     "express-handlebars": "^7.1.3",
     "jsonwebtoken": "^9.0.2",
+    "leaflet-arrowheads": "^1.4.0",
     "mongoose": "^8.4.4",
     "socket.io": "^4.7.5",
     "socket.io-client": "^4.7.5"

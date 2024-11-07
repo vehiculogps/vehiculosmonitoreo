@@ -1,23 +1,51 @@
 html, body, #container {
   height: 100%;
   width: 100%;
+  margin: 0;
+  padding: 0;
   overflow: hidden;
 }
+
 #map {
   display: block;
-  position: absolute;
-  height: 82vh;
+  height: 88vh; /* Mantener el 88% de la altura de la pantalla */
   width: 100%;
 }
-/* Estilo personalizado para evitar que Leaflet oculte elementos encima del mapa */
 
-/* Estilo personalizado para evitar que Leaflet oculte elementos encima del mapa */
+/* Evitar que Leaflet oculte elementos encima del mapa */
 .leaflet-container {
   z-index: 0 !important; /* Asegura que el mapa no esté por encima de otros elementos */
   pointer-events: auto !important; /* Permite la interacción con elementos debajo del mapa */
 }
+
+/* Asegurar que el main ocupa todo el espacio y que no tiene padding */
 main.container-fluid {
   padding-left: 0;
   padding-right: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
 }
+
+nav.navbar {
+  flex-shrink: 0; /* Asegura que el navbar no colapse */
+}
+
+
+
+#map {
+  flex-grow: 1; /* El mapa ocupará todo el espacio restante */
+}
+
+/* Estilos para pantallas pequeñas */
+@media (max-width: 576px) {
+  #map {
+    height: 75vh; /* En pantallas pequeñas, reduce la altura para mostrar más contenido */
+  }
+
+  nav.navbar {
+    height: auto;
+  }
+}
+
 
