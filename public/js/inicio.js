@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function () {
     console.log('Contraseña:', contraseña);
 
     // Realiza la petición al servidor
-    fetch('http://localhost:10000/usuarios/login', {
+    fetch('https://vehiculosmonitoreo.onrender.com/usuarios/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
