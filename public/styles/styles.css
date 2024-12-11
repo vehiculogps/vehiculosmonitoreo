@@ -48,4 +48,40 @@ nav.navbar {
   }
 }
 
+.nav-item a {
+  text-decoration: none; /* Elimina el subrayado */
+  color: #6c757d; /* Gris para el estado inactivo */
+}
+
+.nav-item a:hover {
+  color: #000000; /* Negro cuando el enlace es hovered */
+  text-decoration: none; /* Asegura que no haya subrayado en hover */
+}
+
+
+
+/* Estilo inicial para el select */
+.nav-item select {
+  background-color: #f8f9fa; /* Gris claro (fondo inactivo) */
+  color: #6c757d; /* Gris para el texto */
+  border: none; /* Eliminar borde */
+  outline: none; /* Eliminar el contorno */
+  padding: 5px 10px; /* Espaciado dentro del select */
+  border-radius: 5px; /* Bordes redondeados */
+  transition: all 0.3s ease; /* Efecto de transición para el hover */
+}
+
+/* Estilo cuando el select está en hover */
+.nav-item select:hover {
+  background-color: #e2e6ea; /* Gris oscuro para el hover */
+  color: #000; /* Color negro para el texto cuando se hace hover */
+}
+
+/* Estilo cuando el select tiene el foco (cuando el usuario hace clic en él) */
+.nav-item select:focus {
+  background-color: #e2e6ea; /* Gris oscuro para el foco */
+  color: #000; /* Texto negro */
+  box-shadow: none; /* Elimina cualquier sombra de enfoque predeterminada */
+}
+
 

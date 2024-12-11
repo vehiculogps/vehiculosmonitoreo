@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', (event) => {
+
     var map = L.map('map').setView([7.3782, -72.6480], 15);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -6,6 +7,48 @@ document.addEventListener('DOMContentLoaded', (event) => {
     }).addTo(map);
 
     let currentRouteLayer = null;
+
+    let routePoints = []; // Array para acumular los puntos de la ruta
+    let polyline = L.polyline([], { color: 'blue', weight: 5 }).addTo(map);
+
+    const socket = new WebSocket('ws://localhost:8000');
+
+    socket.onopen = () => {
+        console.log('Conexión al WebSocket establecida');
+        socket.send(JSON.stringify({ source: 'web', message: 'Cliente conectado' }));
+    };
+
+    socket.onmessage = (event) => {
+        try {
+            const data = JSON.parse(event.data);
+            console.log('Punto recibido:', data);
+
+            // Verificar si el mensaje tiene datos válidos
+            if (data.latitude && data.longitude) {
+                // Convertir a formato compatible con Leaflet
+                const newPoint = [data.latitude, data.longitude];
+                routePoints.push(newPoint);
+
+                // Actualizar la línea en el mapa
+                polyline.setLatLngs(routePoints);
+
+                // Ajustar el mapa para mostrar todos los puntos
+                // map.fitBounds(polyline.getBounds());
+            } else {
+                console.warn('Datos inválidos recibidos:', data);
+            }
+        } catch (error) {
+            console.error('Error al procesar el mensaje:', error);
+        }
+    };
+
+    socket.onclose = () => {
+        console.log('Conexión al WebSocket cerrada');
+    };
+
+    socket.onerror = (error) => {
+        console.error('Error en el WebSocket:', error);
+    };
 
     document.getElementById('carSelector').addEventListener('change', function () {
         var vehicleId = this.value;
@@ -22,7 +65,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             return;
         }
 
-        fetch(`http://localhost:3000/rutas/vehiculo/${vehicleId}/dia/${nombreDia}/coordenadas`)
+        fetch(`http://localhost:8000/rutas/vehiculo/${vehicleId}/dia/${nombreDia}/coordenadas`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Error al obtener los datos de la ruta');
@@ -112,4 +155,23 @@ window.onclick = function(event) {
     if (event.target === modal) {
         closeModal();
     }
+}
+
+function logout() {
+    // Make a request to the backend to clear the session or token
+    fetch('/usuarios/logout', {
+        method: 'POST',
+        credentials: 'include' // Ensure cookies are sent with the request
+    })
+    .then(response => {
+        if (response.ok) {
+            // Redirect the user to the login page
+            window.location.href = '/login';
+        } else {
+            console.log('Error during logout');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
 }

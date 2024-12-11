@@ -1,0 +1,42 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">
+        <img src="/logo.png" alt="Icono">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto align-items-center">
+            {{!-- <li class="nav-item active">
+                <a class="nav-link" href="/login">
+                    <i class="bi bi-person-circle me-3"></i> Iniciar Sesión
+                </a>
+            </li> --}}
+            <li class="nav-item">
+                <a class="nav-link" href="/admin">Mapa</a>
+            </li>
+            <li>
+            <a href="/usuarios/logout" class="nav-link">
+              <i class="bi bi-box-arrow-in-right me-4"> Cerrar Sesión</i>     
+            </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" onclick="openModal()" >
+                <i class="bi bi-plus-circle" class="me-3"> Nueva ruta</i>
+                </a>
+            </li>
+            <li class="nav-item">
+                <select class="form-select form-select-sm ms-5" id="carSelector" aria-label="Seleccionar Carro">
+                    <option selected value="">Seleccione un Vehículo</option>
+                    <option value="owg675">Vehículo OWG675</option>
+                    <option value="owg882">Vehículo OWG882</option>
+                    <option value="owg883">Vehículo OWG883</option>
+                </select>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div id="map"></div>
+
+
