@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             return;
         }
 
-        fetch(`http://localhost:8000/rutas/vehiculo/${vehicleId}/dia/${nombreDia}/coordenadas`)
+        fetch(`http://localhost:10000/rutas/vehiculo/${vehicleId}/dia/${nombreDia}/coordenadas`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Error al obtener los datos de la ruta');
