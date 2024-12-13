@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     // Crear el ícono del vehículo
     const vehicleIcon = L.icon({
-        iconUrl: 'https://vehiculosmonitoreo.onrender.com/public/truck.svg', // URL del ícono (reemplazar con tu enlace)
+        iconUrl: 'https://vehiculosmonitoreo.onrender.com/truck.svg', // URL del ícono (reemplazar con tu enlace)
         iconSize: [32, 32], // Tamaño del ícono
         iconAnchor: [16, 16] // Punto de anclaje del ícono
     });
