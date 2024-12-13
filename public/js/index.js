@@ -11,6 +11,16 @@ document.addEventListener('DOMContentLoaded', (event) => {
     let routePoints = []; // Array para acumular los puntos de la ruta
     let polyline = L.polyline([], { color: 'blue', weight: 5 }).addTo(map);
 
+    // Crear el ícono del vehículo
+    const vehicleIcon = L.icon({
+        iconUrl: 'https://example.com/car-icon.svg', // URL del ícono (reemplazar con tu enlace)
+        iconSize: [32, 32], // Tamaño del ícono
+        iconAnchor: [16, 16] // Punto de anclaje del ícono
+    });
+
+    // Crear el marcador del vehículo
+    let vehicleMarker = L.marker([7.3782, -72.6480], { icon: vehicleIcon }).addTo(map);
+
     const socket = new WebSocket('wss://vehiculosmonitoreo.onrender.com');
 
     socket.onopen = () => {
@@ -32,7 +42,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 // Actualizar la línea en el mapa
                 polyline.setLatLngs(routePoints);
 
-                // Ajustar el mapa para mostrar todos los puntos
+                // Mover el marcador del vehículo al último punto
+                vehicleMarker.setLatLng(newPoint);
+
+                // Ajustar el mapa para mostrar todos los puntos si es necesario
                 // map.fitBounds(polyline.getBounds());
             } else {
                 console.warn('Datos inválidos recibidos:', data);
